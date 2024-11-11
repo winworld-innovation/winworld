@@ -1,0 +1,603 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Digital Dummy Election Voting</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f8f8f8;
+
+        }
+        .container {
+            max-width: 800px;
+            margin: auto;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+            
+        }
+        .main-title {
+            text-align: center;
+            font-size: 16px;
+            font-weight: bold;
+            padding: 8px;
+            background-color: #ffffff;
+            color: #000000;
+            border-bottom: 1px solid #ddd;
+        }
+        .instructions {
+            background-color: #2c80ff;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            font-size: 14px;
+        }
+        .header {
+            background-color: #ee4b2b;
+            color: white;
+            padding: 10px;
+            text-align: center;
+            font-size: 18px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: #F4C2C2;
+        }
+        th, td {
+           
+            border: 1px solid #ddd;
+            text-align: center;
+            font-size: 8px;
+        }
+        th {
+            background-color: #f4f4f4;
+        }
+        .candidate-row {
+            background-color: #dda285;
+            color: white;
+            font-weight: bold;
+        }
+        .symbol-column {
+            width: 40px; /* Reducing the width of the Election Symbol column */
+        }
+        .button-column {
+            width: 40px; /* Reducing the width of the Election Symbol column */
+        }
+        .symbol-img {
+            width: 48px;
+            height: auto;
+        }
+        .candidate-img {
+            width: 60px;
+            height: 60px;
+            border-radius: 4px;
+        }
+        .buttoncan {
+            background-color: #304FFE;
+            color: white;
+            padding: 5px 5px;
+            border-radius: 5px;
+            cursor: pointer;
+            border: none;
+            font-weight: bold;
+            font-size: 8px;
+            width: 100%;
+            display: block;
+            margin: 10px 0;
+        }
+        .button {
+            background-color: #304FFE;
+            color: white;
+            padding: 5px 5px;
+            border-radius: 5px;
+            cursor: pointer;
+            border: none;
+            font-weight: bold;
+            height: 20px;
+            font-size: 8px;
+            width: 100%;
+            display: block;
+            margin: 10px 0;
+        }
+        .buttoncan:hover {
+            background-color: #1e40ff;
+        }
+        .bulb-img {
+            width: 20px;
+            height: auto;
+        }
+        .whatsapp-btn {
+            background-color: #25D366;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            border: none;
+            font-weight: bold;
+            width: 100%;
+            display: block;
+            margin: 10px 0;
+            text-align: center;
+            transition: transform 0.2s ease, box-shadow 0.2s ease; /* Smooth hover effect */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Adds depth */
+    animation: pulse 1.5s infinite; /* Attention-grabbing pulse */
+        }
+        .whatsapp-btn:hover {
+            background-color: #128C7E;
+           
+        }
+        .footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 20px;
+            background-color: #f4f4f4;
+            color: #333;
+            font-size: 14px;
+            border-top: 1px solid #ddd;
+            margin-top: 20px;
+        }
+        .footer-left, .footer-center, .footer-right {
+            flex: 1;
+            text-align: center;
+        }
+        .footer-left {
+            text-align: left;
+        }
+        .footer-right {
+            text-align: right;
+        }
+        #overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            display: none;
+            justify-content: center;
+            align-items: flex-start;
+            z-index: 1000;
+        }
+
+        /* Animated image styling */
+        #animated-image {
+            position: absolute;
+            top: -100px; /* Starts above the screen */
+            animation: slideDown 2s forwards; /* Animates down */
+        }
+
+        /* Slide down animation */
+        @keyframes slideDown {
+            from { top: -100px; }
+            to { top: 20%; } /* Ends near the center of the screen */
+        }
+#special-button {
+    background: linear-gradient(45deg, #304FFE, #1e40ff);
+    color: white;
+    padding: 12px 24px; /* Slightly larger for emphasis */
+    border-radius: 8px;
+    cursor: pointer;
+    border: none;
+    font-weight: bold;
+    font-size: 16px;
+    width: 100%;
+    display: block;
+    margin: 10px 0;
+    transition: transform 0.2s ease, box-shadow 0.2s ease; /* Smooth hover effect */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Adds depth */
+    animation: pulse 1.5s infinite; /* Attention-grabbing pulse */
+}
+
+#special-button:hover {
+    background: linear-gradient(45deg, #1e40ff, #304FFE);
+    transform: scale(1.05); /* Slight enlargement on hover */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4); /* Enhanced shadow on hover */
+}
+.button-gif {
+    width: 24px; /* Set width of the GIF */
+    height: 24px; /* Set height of the GIF */
+    margin-right: 10px; /* Space between GIF and text */
+}
+
+
+@keyframes pulse {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.05);
+    }
+}
+
+@media (max-width: 600px) {
+    #special-button {
+        padding: 8px 16px; /* Adjusted for smaller screens */
+        font-size: 14px;
+    }
+    .button-gif {
+        width: 20px;
+        height: 20px;
+    }
+}
+
+        
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="main-title">
+            सार्वत्रिक निवडणूक 2024<br>
+            डिजिटल डमी मतदान यंत्र (EVM) (Only for education purpose)
+        </div>
+
+        <button id="special-button" onclick="playSound()">
+            <img src="ADD A GIF HERE" alt="GIF" class="button-gif">
+            
+        </button>
+
+        <div class="header">
+           
+        </div>
+
+         <!-- WhatsApp Share Button -->
+         <a href="https://wa.me/?text=नमस्कार,%0Aडेमो%20मतदान%20करण्यासाठी%20लिंक%20वर%20क्लिक%20करावे.%0A%0Ahttps://www.vsampark.com/misal.html%0A%0Aविनायक %20ज्ञानेश्वर %20बोबडे %0Aभारतीय%20जनता%20पक्ष%0A212%20पर्वती%20विधानसभा%20सार्वत्रिक%20निवडणूक%202024" class="whatsapp-btn"  target="_blank">Share on WhatsApp</a>
+        
+        <table>
+            <thead>
+                <tr>
+                    <th>S.No</th>
+                    <th>Name of Candidate</th>
+                    <th>Election Symbol</th>
+                    <th>Bulb</th>
+                    <th>Button</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>1</td>
+                    <td>
+                        <table style="width: 100%; border: none;">
+                            <tr>
+                                <td style="text-align: left; border: none;">  <!-- Empty cell for Name -->  </td>
+                                <td style="text-align: right; border: none;">
+                                      <!-- Empty cell for Candidate Image -->
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                    <th class="symbol-column">  <!-- Empty cell for Symbol Image --></th>
+                    <td><img class="bulb-img" src="C:\Users\KRISHNA BOBADE\Downloads\leftarrow.png" alt="Bulb" id="bulb-1"></td>
+                    <td><button class="button" onclick="errorbeep()"></button></td>
+                </tr>
+                <tr class="candidate-row">
+                    <td style="font-size: 16px;">2</td>
+                    <td>
+                        <table style="width: 100%; border: none;">
+                            <tr>
+                                <td style="text-align: left; font-size: 14px; background-color: #dda285; border: none;">विनायक ज्ञानेश्वर बोबडे <br>Vinayak Dnyaneshwar Bobade</td>
+                                <td style="text-align: right; border: none;  background-color: #dda285;">
+                                    <img class="candidate-img" src="C:\Users\KRISHNA BOBADE\Downloads\vinayak.jpeg" alt="Candidate Image">
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                    <td class="symbol-column"><img class="symbol-img" src="C:\Users\KRISHNA BOBADE\Downloads\download.png" alt="Symbol"></td>
+                    <td><img class="bulb-img" src="C:\Users\KRISHNA BOBADE\Downloads\leftarrow.png" alt="Bulb" id="bulb-0"></td>
+                    <td class="button-column"><button id="special-button" class="buttoncan" onclick="changeBulbImage(0)">बटन दाबा</button></td>
+                </tr>
+                <tr>
+                    <tr>
+                        <td>3</td>
+                        <td>
+                            <table style="width: 100%; border: none;">
+                                <tr>
+                                    <td style="text-align: left; border: none;">  <!-- Empty cell for Name -->  </td>
+                                    <td style="text-align: right; border: none;">
+                                          <!-- Empty cell for Candidate Image -->
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                        <th class="symbol-column">  <!-- Empty cell for Symbol Image --></th>
+                        <td><img class="bulb-img" src="C:\Users\KRISHNA BOBADE\Downloads\leftarrow.png" alt="Bulb" id="bulb-1"></td>
+                        <td><button  class="button" onclick="errorbeep()"></button></td>
+                    </tr>
+                    <tr>
+                        <td>4</td>
+                        <td>
+                            <table style="width: 100%; border: none;">
+                                <tr>
+                                    <td style="text-align: left; border: none;">  <!-- Empty cell for Name -->  </td>
+                                    <td style="text-align: right; border: none;">
+                                          <!-- Empty cell for Candidate Image -->
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                        <th class="symbol-column">  <!-- Empty cell for Symbol Image --></th>
+                        <td><img class="bulb-img" src="C:\Users\KRISHNA BOBADE\Downloads\leftarrow.png" alt="Bulb" id="bulb-1"></td>
+                        <td><button class="button" onclick="errorbeep()"></button></td>
+                    </tr>
+                    <tr>
+                        <td>5</td>
+                        <td>
+                            <table style="width: 100%; border: none;">
+                                <tr>
+                                    <td style="text-align: left; border: none;">  <!-- Empty cell for Name -->  </td>
+                                    <td style="text-align: right; border: none;">
+                                          <!-- Empty cell for Candidate Image -->
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                        <th class="symbol-column">  <!-- Empty cell for Symbol Image --></th>
+                        <td><img class="bulb-img" src="C:\Users\KRISHNA BOBADE\Downloads\leftarrow.png" alt="Bulb" id="bulb-1"></td>
+                        <td><button class="button" onclick="errorbeep()"></button></td>
+                    </tr>
+                    <tr>
+                        <td>6</td>
+                        <td>
+                            <table style="width: 100%; border: none;">
+                                <tr>
+                                    <td style="text-align: left; border: none;">  <!-- Empty cell for Name -->  </td>
+                                    <td style="text-align: right; border: none;">
+                                          <!-- Empty cell for Candidate Image -->
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                        <th class="symbol-column">  <!-- Empty cell for Symbol Image --></th>
+                        <td><img class="bulb-img" src="C:\Users\KRISHNA BOBADE\Downloads\leftarrow.png" alt="Bulb" id="bulb-1"></td>
+                        <td><button class="button" onclick="errorbeep()"></button></td>
+                    </tr>
+                    <tr>
+                        <td>7</td>
+                        <td>
+                            <table style="width: 100%; border: none;">
+                                <tr>
+                                    <td style="text-align: left; border: none;">  <!-- Empty cell for Name -->  </td>
+                                    <td style="text-align: right; border: none;">
+                                          <!-- Empty cell for Candidate Image -->
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                        <th class="symbol-column">  <!-- Empty cell for Symbol Image --></th>
+                        <td><img class="bulb-img" src="C:\Users\KRISHNA BOBADE\Downloads\leftarrow.png" alt="Bulb" id="bulb-1"></td>
+                        <td><button class="button" onclick="errorbeep()"></button></td>
+                    </tr>
+                    <tr>
+                        <td>8</td>
+                        <td>
+                            <table style="width: 100%; border: none;">
+                                <tr>
+                                    <td style="text-align: left; border: none;">  <!-- Empty cell for Name -->  </td>
+                                    <td style="text-align: right; border: none;">
+                                          <!-- Empty cell for Candidate Image -->
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                        <th class="symbol-column">  <!-- Empty cell for Symbol Image --></th>
+                        <td><img class="bulb-img" src="C:\Users\KRISHNA BOBADE\Downloads\leftarrow.png" alt="Bulb" id="bulb-1"></td>
+                        <td><button class="button" onclick="errorbeep()"></button></td>
+                    </tr>
+                    <tr>
+                        <td>9</td>
+                        <td>
+                            <table style="width: 100%; border: none;">
+                                <tr>
+                                    <td style="text-align: left; border: none;">  <!-- Empty cell for Name -->  </td>
+                                    <td style="text-align: right; border: none;">
+                                          <!-- Empty cell for Candidate Image -->
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                        <th class="symbol-column">  <!-- Empty cell for Symbol Image --></th>
+                        <td><img class="bulb-img" src="C:\Users\KRISHNA BOBADE\Downloads\leftarrow.png" alt="Bulb" id="bulb-1"></td>
+                        <td><button class="button" onclick="errorbeep()"></button></td>
+                    </tr>
+                    <tr>
+                        <td>10</td>
+                        <td>
+                            <table style="width: 100%; border: none;">
+                                <tr>
+                                    <td style="text-align: left; border: none;">  <!-- Empty cell for Name -->  </td>
+                                    <td style="text-align: right; border: none;">
+                                          <!-- Empty cell for Candidate Image -->
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                        <th class="symbol-column">  <!-- Empty cell for Symbol Image --></th>
+                        <td><img class="bulb-img" src="C:\Users\KRISHNA BOBADE\Downloads\leftarrow.png" alt="Bulb" id="bulb-1"></td>
+                        <td><button class="button" onclick="errorbeep()"></button></td>
+                    </tr>
+                    <tr>
+                        <td>11</td>
+                        <td>
+                            <table style="width: 100%; border: none;">
+                                <tr>
+                                    <td style="text-align: left; border: none;">  <!-- Empty cell for Name -->  </td>
+                                    <td style="text-align: right; border: none;">
+                                          <!-- Empty cell for Candidate Image -->
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                        <th class="symbol-column">  <!-- Empty cell for Symbol Image --></th>
+                        <td><img class="bulb-img" src="C:\Users\KRISHNA BOBADE\Downloads\leftarrow.png" alt="Bulb" id="bulb-1"></td>
+                        <td><button class="button" onclick="errorbeep()"></button></td>
+                    </tr>
+                    <tr>
+                        <td>12</td>
+                        <td>
+                            <table style="width: 100%; border: none;">
+                                <tr>
+                                    <td style="text-align: left; border: none;">  <!-- Empty cell for Name -->  </td>
+                                    <td style="text-align: right; border: none;">
+                                          <!-- Empty cell for Candidate Image -->
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                        <th class="symbol-column">  <!-- Empty cell for Symbol Image --></th>
+                        <td><img class="bulb-img" src="C:\Users\KRISHNA BOBADE\Downloads\leftarrow.png" alt="Bulb" id="bulb-1"></td>
+                        <td><button class="button" onclick="errorbeep()"></button></td>
+                    </tr>
+                    <tr>
+                        <td>13</td>
+                        <td>
+                            <table style="width: 100%; border: none;">
+                                <tr>
+                                    <td style="text-align: left; border: none;">  <!-- Empty cell for Name -->  </td>
+                                    <td style="text-align: right; border: none;">
+                                          <!-- Empty cell for Candidate Image -->
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                        <th class="symbol-column">  <!-- Empty cell for Symbol Image --></th>
+                        <td><img class="bulb-img" src="C:\Users\KRISHNA BOBADE\Downloads\leftarrow.png" alt="Bulb" id="bulb-1"></td>
+                        <td><button class="button" onclick="errorbeep()"></button></td>
+                    </tr>
+                    <tr>
+                        <td>14</td>
+                        <td>
+                            <table style="width: 100%; border: none;">
+                                <tr>
+                                    <td style="text-align: left; border: none;">  <!-- Empty cell for Name -->  </td>
+                                    <td style="text-align: right; border: none;">
+                                          <!-- Empty cell for Candidate Image -->
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                        <th class="symbol-column">  <!-- Empty cell for Symbol Image --></th>
+                        <td><img class="bulb-img" src="C:\Users\KRISHNA BOBADE\Downloads\leftarrow.png" alt="Bulb" id="bulb-1"></td>
+                        <td><button class="button" onclick="errorbeep()"></button></td>
+                    </tr>
+                    <tr>
+                        <td>15</td>
+                        <td>
+                            <table style="width: 100%; border: none;">
+                                <tr>
+                                    <td style="text-align: left; border: none;">  <!-- Empty cell for Name -->  </td>
+                                    <td style="text-align: right; border: none;">
+                                          <!-- Empty cell for Candidate Image -->
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                        <th class="symbol-column">  <!-- Empty cell for Symbol Image --></th>
+                        <td><img class="bulb-img" src="C:\Users\KRISHNA BOBADE\Downloads\leftarrow.png" alt="Bulb" id="bulb-1"></td>
+                        <td><button class="button" onclick="errorbeep()"></button></td>
+                    </tr>
+                    <tr>
+                        <td>16</td>
+                        <td>
+                            <table style="width: 100%; border: none;">
+                                <tr>
+                                    <td style="text-align: left; border: none; font-size: 15px;">  NOTA  </td>
+                                    <td style="text-align: right; border: none;">
+                                          <!-- Empty cell for Candidate Image -->
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                        <th class="symbol-column">  <!-- Empty cell for Symbol Image --></th>
+                        <td><img class="bulb-img" src="C:\Users\KRISHNA BOBADE\Downloads\leftarrow.png" alt="Bulb" id="bulb-1"></td>
+                        <td><button class="button" onclick="errorbeep()"></button></td>
+                    </tr>
+        
+            </tbody>
+        </table>
+
+       
+        
+        <!-- Footer -->
+        <div class="footer">
+           
+            <span class="footer-center">Developed by Winworld<br>Contact: 7517247567</span>
+
+        </div>
+    </div> <!-- Close container div -->
+
+    <div id="overlay" onclick="hideOverlay()">
+        <img id="animated-image"  src="C:\Users\KRISHNA BOBADE\Downloads\vinayakbobadevvtp2.png" alt="Animated Image">
+    </div>
+    
+    <script>
+        // Create an Audio object for the sound effect
+        var beep = new Audio('file:///C:/Users/KRISHNA BOBADE/Downloads/beep.mp3'); // Replace with your sound URL
+        var demo = new Audio('file:///C:/Users/KRISHNA BOBADE/Downloads/beep.mp3');
+        var donevoting = new Audio('C:/Users/KRISHNA BOBADE/Downloads/donevoting.mp3');
+        var error = new Audio('file:///C:/Users/KRISHNA BOBADE/Downloads/beep.mp3');
+
+        function showOverlay() {
+            var overlay = document.getElementById('overlay');
+            overlay.style.display = 'flex';  // Show the overlay
+
+            // Hide the overlay after 3 seconds
+            setTimeout(hideOverlay, 4000);
+        }
+
+        // Function to hide the overlay
+        function hideOverlay() {
+            var overlay = document.getElementById('overlay');
+            overlay.style.display = 'none'; // Hide the overlay
+        }
+
+
+        // Function to change bulb image for a few seconds and play the sound
+        function changeBulbImage(rowId) {
+            // Play the sound
+            beep.play();
+            donevoting.play();
+
+            // Get the bulb image element for the given row
+            var bulbElement = document.getElementById('bulb-' + rowId);
+
+            // Store the original bulb image src
+            var originalSrc = bulbElement.src;
+
+            // Change the bulb image to a different one
+            bulbElement.src = "file:///C:/Users/KRISHNA BOBADE/Downloads/redleftarrow.png"; // New bulb image (can be replaced with actual image)
+
+            // Revert back to the original image after 2 seconds
+            setTimeout(function() {
+                bulbElement.src = originalSrc;
+            }, 2000); // 2000 milliseconds = 2 seconds
+
+            setTimeout(showOverlay, 4000);
+
+           /* showOverlay();*/
+        }
+
+        function errorbeep() {
+            error.play();
+        }
+
+        // Function to play sound when the "" button is clicked
+        function playSound() {
+            demo.play();
+        }
+    </script>
+</body>
+</html>
+
+
+
+
+
+
